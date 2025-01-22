@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	path = "/file/country"
-	name = "Countries.csv"
+	path = "customer-service/file/countries/"
+	name = "countries.csv"
 )
 
 type Countries struct {
@@ -47,14 +47,14 @@ func LoadCountries() (*Countries, error) {
 }
 
 func (c *Countries) FilterByCode(codes ...string) (Countries, error) {
-	entry := Countries{}
+	entry := make([]country.Country, 0)
 	for _, code := range codes {
-		for j, cnty := range c.Countries {
+		for _, cnty := range c.Countries {
 			if cnty.Code == code {
-				entry.Countries[j] = cnty
+				entry = append(entry, cnty)
 			}
 		}
 	}
 
-	return entry, nil
+	return Countries{Countries: entry}, nil
 }
