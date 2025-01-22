@@ -3,6 +3,6 @@ set-app-path:
 	zsh ./shell/set.sh
 	#sh ./shell/set.sh
 update-lib:
-	go get github.com/mhthrh/common-lib #get latest commit instead of "go get github.com/mhthrh/common-lib@latest-hashcode"
+	go get github.com/mhthrh/common-lib
 test:
-	go test ./... -v -bench . -failfast -cover -count=1
+	go test ./test -v -bench . -failfast -cover -count=1
