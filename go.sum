@@ -1,0 +1,6 @@
+github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
+github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
+github.com/mhthrh/common-lib v0.0.0-20250121230819-a038d58306e1 h1:bNkfwdQ90hfDSuBrg3xDcQj6Kq2+Ts72nrMfnYHrdUo=
+github.com/mhthrh/common-lib v0.0.0-20250121230819-a038d58306e1/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250122003542-41925a8f4ace h1:alXWJ6N9wRywzC+/fY/X3s6vsdIfZmmaon60zNipMZo=
+github.com/mhthrh/common-lib v0.0.0-20250122003542-41925a8f4ace/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
