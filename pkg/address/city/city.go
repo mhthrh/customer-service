@@ -3,7 +3,10 @@ package city
 import (
 	"bytes"
 	"encoding/csv"
+	"errors"
 	"github.com/google/uuid"
+	customeError "github.com/mhthrh/common-lib/errors"
+	cityError "github.com/mhthrh/common-lib/errors/city"
 	"github.com/mhthrh/common-lib/model/address/city"
 	csvFile "github.com/mhthrh/common-lib/pkg/util/file"
 )
@@ -17,7 +20,7 @@ type City struct {
 	Cities []city.City
 }
 
-func Load() (*City, error) {
+func Load() (*City, *customeError.XError) {
 	f := csvFile.File{
 		Name: name,
 		Path: path,
@@ -25,14 +28,14 @@ func Load() (*City, error) {
 	}
 	e := f.Read()
 	if e != nil {
-		return nil, e
+		return nil, cityError.FileUnreachable(customeError.RunTimeError(e))
 	}
 
 	reader := csv.NewReader(bytes.NewReader(f.Data))
 
 	rows, err := reader.ReadAll()
 	if err != nil {
-		return nil, err
+		return nil, cityError.FileUnreachable(customeError.RunTimeError(err))
 	}
 	c := make([]city.City, len(rows))
 	for i, row := range rows {
@@ -41,6 +44,9 @@ func Load() (*City, error) {
 			Name:        row[1],
 			CountryCode: row[0],
 		}
+	}
+	if len(c) == 0 {
+		return nil, cityError.FileEmpty(customeError.RunTimeError(errors.New("no city found")))
 	}
 
 	return &City{
@@ -53,6 +59,27 @@ func (c *City) FilterByCountry(country string) City {
 
 	for _, cnty := range c.Cities {
 		if cnty.CountryCode == country {
+			entry = append(entry, cnty)
+		}
+	}
+	return City{Cities: entry}
+}
+
+func (c *City) FilterByCity(cti string) City {
+	entry := make([]city.City, 0)
+
+	for _, cnty := range c.Cities {
+		if cnty.Name == cti {
+			entry = append(entry, cnty)
+		}
+	}
+	return City{Cities: entry}
+}
+func (c *City) FilterByCityAndCountry(cti, ctry string) City {
+	entry := make([]city.City, 0)
+
+	for _, cnty := range c.Cities {
+		if cnty.Name == cti && cnty.CountryCode == ctry {
 			entry = append(entry, cnty)
 		}
 	}

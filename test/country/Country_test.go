@@ -2,14 +2,14 @@ package country
 
 import (
 	"customer-service/pkg/address/country"
-	"customer-service/test"
-	"errors"
+	customeError "github.com/mhthrh/common-lib/errors"
+	"github.com/mhthrh/common-lib/model/test"
 	"testing"
 )
 
 var (
 	c *country.Countries
-	e error
+	e *customeError.XError
 )
 
 func init() {
@@ -61,7 +61,7 @@ func TestFilterByCode(t *testing.T) {
 			t.Error(tst.Err)
 		}
 		if tst.HasError {
-			if !errors.Is(e, tst.Err) {
+			if e.Code != tst.Err.Code {
 				t.Error("expected error is not equal with this error.")
 			}
 			break

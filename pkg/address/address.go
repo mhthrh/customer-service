@@ -5,6 +5,7 @@ import (
 	customerCountry "customer-service/pkg/address/country"
 	"errors"
 	customeError "github.com/mhthrh/common-lib/errors"
+	addressError "github.com/mhthrh/common-lib/errors/address"
 	"github.com/mhthrh/common-lib/model/address"
 	"strings"
 )
@@ -17,39 +18,39 @@ type Address struct {
 
 func NewAddress(street, postalCode, state, cntry, cty string) (*Address, *customeError.XError) {
 	if strings.Trim(street, " ") == "" {
-		return nil, customeError.StreetNotFound(nil)
+		return nil, addressError.StreetNotFound(nil)
 	}
 	if strings.Trim(postalCode, " ") == "" {
-		return nil, customeError.PostalCodeNotFound(nil)
+		return nil, addressError.PostalCodeNotFound(nil)
 	}
 	if strings.Trim(state, " ") == "" {
-		return nil, customeError.StateNotFound(nil)
+		return nil, addressError.StateNotFound(nil)
 	}
 	if strings.Trim(cntry, " ") == "" {
-		return nil, customeError.CountryNotFound(nil)
+		return nil, addressError.CountryNotFound(nil)
 	}
 	if strings.Trim(cty, " ") == "" {
-		return nil, customeError.CityNotFound(nil)
+		return nil, addressError.CityNotFound(nil)
 	}
 	c, e := customerCountry.LoadCountries()
 	if e != nil {
-		return nil, customeError.CountryNotFound(e)
+		return nil, addressError.CountryNotFound(e)
 	}
 	cResult, err := c.FilterByCode(cntry)
 	if err != nil {
-		return nil, customeError.CityNotFound(err)
+		return nil, addressError.CityNotFound(err)
 	}
 	if len(cResult.Countries) != 1 {
-		return nil, customeError.CountryNotFound(errors.New("count is more than 1"))
+		return nil, addressError.CountryNotFound(customeError.RunTimeError(errors.New("invalid countries length")))
 	}
 	cy, e := customerCity.Load()
 	if e != nil {
-		return nil, customeError.CityNotFound(e)
+		return nil, addressError.CityNotFound(e)
 	}
-	cyResult := cy.FilterByCountry(cntry)
+	cyResult := cy.FilterByCityAndCountry(cty, cntry)
 
 	if len(cyResult.Cities) != 1 {
-		return nil, customeError.CityNotFound(errors.New("count is more than 1"))
+		return nil, addressError.CityNotFound(customeError.RunTimeError(errors.New("count is more than 1")))
 	}
 
 	return &Address{Adrs: address.Address{

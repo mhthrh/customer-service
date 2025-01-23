@@ -14,3 +14,13 @@ github.com/mhthrh/common-lib v0.0.0-20250123001659-84dc645e06fb h1:35Ut7zG0a1O3a
 github.com/mhthrh/common-lib v0.0.0-20250123001659-84dc645e06fb/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
 github.com/mhthrh/common-lib v0.0.0-20250123002453-01891ce3e99b h1:0XjxqcEAHUl/KYnQKz5LA3nWNedhNpq6iRhW9LsTVzY=
 github.com/mhthrh/common-lib v0.0.0-20250123002453-01891ce3e99b/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250123194039-e12e060428d7 h1:t4svSg8wwpsKbGlC75RvAkFV+Z5DHUevisR3rlBfvyY=
+github.com/mhthrh/common-lib v0.0.0-20250123194039-e12e060428d7/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250123205115-be0f8f728c7a h1:yP6sFWyc5Mo/s5+XcbqagKDKZ+Xv4SsKfH/gstBuqCQ=
+github.com/mhthrh/common-lib v0.0.0-20250123205115-be0f8f728c7a/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250123213600-079edbe8c73d h1:HixWQ4sQ+45WZWFa4ZJuy18J3+1VGrjbxDUiMYnuOKI=
+github.com/mhthrh/common-lib v0.0.0-20250123213600-079edbe8c73d/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250123222009-dde0b1ba0109 h1:Gx8mCVU0TjWKY6pZICjsSh1LDyL38VjU1xUGzBb39E8=
+github.com/mhthrh/common-lib v0.0.0-20250123222009-dde0b1ba0109/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250123222811-4d5551453445 h1:mdWUyIkkbtLe8VPjcqpbkdEfl6YWp9S7Mn5Eg7r7wVg=
+github.com/mhthrh/common-lib v0.0.0-20250123222811-4d5551453445/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=

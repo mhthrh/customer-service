@@ -2,7 +2,6 @@
 env_path="A3PATH"
 env_value="/home/mohsen/Documents/Golang/x-bank"
 
-
 shell_config_file="$(echo $SHELL | grep -o 'bash\|zsh')"
 
 if [ "$shell_config_file" = "bash" ]; then
@@ -19,7 +18,6 @@ if ! grep -q "export $env_path=" "$shell_config_file"; then
 else
   echo "Variable already exists in $shell_config_file"
 fi
-
 
 source "$shell_config_file"
 

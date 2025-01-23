@@ -2,13 +2,14 @@ package city
 
 import (
 	"customer-service/pkg/address/city"
-	"customer-service/test"
+	customeError "github.com/mhthrh/common-lib/errors"
+	"github.com/mhthrh/common-lib/model/test"
 	"testing"
 )
 
 var (
 	c *city.City
-	e error
+	e *customeError.XError
 )
 
 func init() {
