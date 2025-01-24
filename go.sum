@@ -24,3 +24,5 @@ github.com/mhthrh/common-lib v0.0.0-20250123222009-dde0b1ba0109 h1:Gx8mCVU0TjWKY
 github.com/mhthrh/common-lib v0.0.0-20250123222009-dde0b1ba0109/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
 github.com/mhthrh/common-lib v0.0.0-20250123222811-4d5551453445 h1:mdWUyIkkbtLe8VPjcqpbkdEfl6YWp9S7Mn5Eg7r7wVg=
 github.com/mhthrh/common-lib v0.0.0-20250123222811-4d5551453445/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
+github.com/mhthrh/common-lib v0.0.0-20250124011355-02f444d9d1d4 h1:WkNUXENlqnt794VIU27MXcA0+8bcRvAfi0OnTrqkpdg=
+github.com/mhthrh/common-lib v0.0.0-20250124011355-02f444d9d1d4/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
