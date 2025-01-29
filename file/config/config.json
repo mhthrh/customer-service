@@ -1,0 +1,23 @@
+{
+  "metaData": {
+    "appName": "com.customer.x-bank",
+    "isTest": true,
+    "version": "1.0.0",
+    "expireDate": "2026-01-01"
+  },
+  "secret": {
+    "secretKey": "sabziPoloBaMahi(!?@)NetamShode3G",
+    "tokenDuration": "30h"
+  },
+  "db": {
+    "name": "postgresSQL",
+    "host": "localhost",
+    "port": 5432,
+    "user": "postgres",
+    "password": "123456",
+    "dbname": "blue_bank",
+    "driver": "kireKhar",
+    "minCount": 1,
+    "maxCount": 20
+  }
+}
