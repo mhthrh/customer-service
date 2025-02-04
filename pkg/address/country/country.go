@@ -7,7 +7,7 @@ import (
 	customeError "github.com/mhthrh/common-lib/errors"
 	countryError "github.com/mhthrh/common-lib/errors/country"
 	"github.com/mhthrh/common-lib/model/address/country"
-	csvFile "github.com/mhthrh/common-lib/pkg/util/file"
+	csvFile "github.com/mhthrh/common-lib/pkg/util/file/csv"
 )
 
 const (
@@ -20,16 +20,13 @@ type Countries struct {
 }
 
 func LoadCountries() (*Countries, *customeError.XError) {
-	f := csvFile.File{
-		Name: name,
-		Path: path,
-		Data: nil,
-	}
-	e := f.Read()
+	f := csvFile.New(path, name)
+
+	bts, e := f.Read()
 	if e != nil {
 		return nil, countryError.FileUnreachable(customeError.RunTimeError(e))
 	}
-	reader := csv.NewReader(bytes.NewReader(f.Data))
+	reader := csv.NewReader(bytes.NewReader(bts))
 
 	rows, err := reader.ReadAll()
 	if err != nil {

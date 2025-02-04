@@ -1,7 +1,7 @@
 package main
 
 import (
-	loader "github.com/mhthrh/common-lib/config"
+	loader "github.com/mhthrh/common-lib/config/loader/file"
 	l "github.com/mhthrh/common-lib/config/logger"
 	"go.uber.org/zap"
 )
@@ -19,8 +19,11 @@ func main() {
 
 	sugar := logger.Sugar()
 	sugar.Info("Loading config...")
-	config := loader.NewFile(configName, configPath)
-	if err := config.Initialize(); err != nil {
-		sugar.Fatal("Failed to initialize config", zap.Error(err))
+
+	config, err := loader.New(configPath, configName).Initialize()
+	if err != nil {
+		sugar.Fatal(err)
 	}
+	sugar.Info("customer service config loaded successfully")
+	sugar.Info(config)
 }

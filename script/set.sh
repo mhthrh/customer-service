@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 env_path="A3PATH"
-env_value="/home/mohsen/Documents/Golang/x-bank"
+env_value="/Users/mohsen/Projects/Golang/x-bank"
 
 shell_config_file="$(echo $SHELL | grep -o 'bash\|zsh')"
 

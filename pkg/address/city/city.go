@@ -8,7 +8,7 @@ import (
 	customeError "github.com/mhthrh/common-lib/errors"
 	cityError "github.com/mhthrh/common-lib/errors/city"
 	"github.com/mhthrh/common-lib/model/address/city"
-	csvFile "github.com/mhthrh/common-lib/pkg/util/file"
+	csvFile "github.com/mhthrh/common-lib/pkg/util/file/csv"
 )
 
 const (
@@ -21,17 +21,13 @@ type City struct {
 }
 
 func Load() (*City, *customeError.XError) {
-	f := csvFile.File{
-		Name: name,
-		Path: path,
-		Data: nil,
-	}
-	e := f.Read()
+	f := csvFile.New(path, name)
+	bts, e := f.Read()
 	if e != nil {
 		return nil, cityError.FileUnreachable(customeError.RunTimeError(e))
 	}
 
-	reader := csv.NewReader(bytes.NewReader(f.Data))
+	reader := csv.NewReader(bytes.NewReader(bts))
 
 	rows, err := reader.ReadAll()
 	if err != nil {

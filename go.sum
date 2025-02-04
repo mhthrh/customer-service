@@ -34,6 +34,8 @@ github.com/mhthrh/common-lib v0.0.0-20250128230045-797d2c37e929 h1:RUB2f8SO4HwzO
 github.com/mhthrh/common-lib v0.0.0-20250128230045-797d2c37e929/go.mod h1:FksLmNfiHsnnL5FQ4ixI6hJ3zcYbh+xhkKaVlSS3oaA=
 github.com/mhthrh/common-lib v0.0.0-20250129001853-ed4db121fd0d h1:/t6ktA0bHIONaI7VVijdp5dug5NMlFDEvlSWytt3xU8=
 github.com/mhthrh/common-lib v0.0.0-20250129001853-ed4db121fd0d/go.mod h1:g2yHYFQjiRoRz9+CBib4DHhSjrmq1PncYSpzN3BOLNg=
+github.com/mhthrh/common-lib v0.0.0-20250204224139-6312f3a303f1 h1:qgzDBBQ+ZL3QP4MGncGsTJ8pIrw7CQEDJ1UIo/jnpiE=
+github.com/mhthrh/common-lib v0.0.0-20250204224139-6312f3a303f1/go.mod h1:VGZccxOM9nwmozp/4csV+eJ1O/ePfDCEkDrpGXxbjQY=
 go.uber.org/multierr v1.10.0 h1:S0h4aNzvfcFsC3dRF1jLoaov7oRaKqRGC/pUEJ2yvPQ=
 go.uber.org/multierr v1.10.0/go.mod h1:20+QtiLqy0Nd6FdQB9TLXag12DsQkrbs3htMFfDN80Y=
 go.uber.org/zap v1.27.0 h1:aJMhYGrd5QSmlpLMr2MftRKl7t8J8PTZPA732ud/XR8=
