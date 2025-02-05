@@ -3,7 +3,10 @@ package main
 import (
 	loader "github.com/mhthrh/common-lib/config/loader/file"
 	l "github.com/mhthrh/common-lib/config/logger"
+	customeError "github.com/mhthrh/common-lib/errors"
 	"go.uber.org/zap"
+	"os"
+	"os/signal"
 )
 
 const (
@@ -11,6 +14,16 @@ const (
 	configName = "config.json"
 )
 
+var (
+	osInterrupt       chan os.Signal
+	listenerInterrupt chan *customeError.XError
+)
+
+func init() {
+	osInterrupt = make(chan os.Signal)
+	listenerInterrupt = make(chan *customeError.XError)
+	signal.Notify(osInterrupt, os.Interrupt)
+}
 func main() {
 	logger := zap.New(l.LogConfig())
 	defer func() {
@@ -26,4 +39,12 @@ func main() {
 	}
 	sugar.Info("customer service config loaded successfully")
 	sugar.Info(config)
+
+	select {
+	case <-osInterrupt:
+		sugar.Info("OS interrupt signal received")
+	case e := <-listenerInterrupt:
+		sugar.Infof("customer service listener interrupt signal received, %+v", e)
+	}
+
 }

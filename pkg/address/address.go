@@ -10,8 +10,6 @@ import (
 	"strings"
 )
 
-type Inter struct {
-}
 type Address struct {
 	Adrs address.Address
 }
