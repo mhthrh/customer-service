@@ -7,7 +7,8 @@ import (
 	"github.com/google/uuid"
 	customeError "github.com/mhthrh/common-lib/errors"
 	cityError "github.com/mhthrh/common-lib/errors/city"
-	"github.com/mhthrh/common-lib/model/address/city"
+	countryError "github.com/mhthrh/common-lib/errors/country"
+	cityModel "github.com/mhthrh/common-lib/model/address/city"
 	csvFile "github.com/mhthrh/common-lib/pkg/util/file/csv"
 )
 
@@ -16,68 +17,89 @@ const (
 	name = "cities.csv"
 )
 
+var (
+	cities []cityModel.City
+)
+
 type City struct {
-	Cities []city.City
+	path string
+	name string
 }
 
-func Load() (*City, *customeError.XError) {
-	f := csvFile.New(path, name)
+func New() cityModel.ICity {
+	return City{
+		path: path,
+		name: name,
+	}
+}
+func (c City) Load() *customeError.XError {
+	f := csvFile.New(c.path, c.name)
 	bts, e := f.Read()
 	if e != nil {
-		return nil, cityError.FileUnreachable(customeError.RunTimeError(e))
+		return cityError.FileUnreachable(customeError.RunTimeError(e))
 	}
 
 	reader := csv.NewReader(bytes.NewReader(bts))
 
 	rows, err := reader.ReadAll()
 	if err != nil {
-		return nil, cityError.FileUnreachable(customeError.RunTimeError(err))
+		return cityError.FileUnreachable(customeError.RunTimeError(err))
 	}
-	c := make([]city.City, len(rows))
+	cities = make([]cityModel.City, len(rows))
 	for i, row := range rows {
-		c[i] = city.City{
+		cities[i] = cityModel.City{
 			ID:          uuid.New(),
 			Name:        row[1],
 			CountryCode: row[0],
 		}
 	}
-	if len(c) == 0 {
-		return nil, cityError.FileEmpty(customeError.RunTimeError(errors.New("no city found")))
+	if len(cities) == 0 {
+		return cityError.FileEmpty(customeError.RunTimeError(errors.New("no city found")))
 	}
 
-	return &City{
-		Cities: c,
-	}, nil
+	return nil
 }
-
-func (c *City) FilterByCountry(country string) City {
-	entry := make([]city.City, 0)
-
-	for _, cnty := range c.Cities {
+func (c City) Cities() ([]cityModel.City, *customeError.XError) {
+	if len(cities) == 0 {
+		return nil, cityError.NotLoaded(nil)
+	}
+	return cities, nil
+}
+func (c City) GetByCountry(country string) ([]cityModel.City, *customeError.XError) {
+	entry := make([]cityModel.City, 0)
+	if len(cities) == 0 {
+		return nil, countryError.NotLoaded(nil)
+	}
+	for _, cnty := range cities {
 		if cnty.CountryCode == country {
 			entry = append(entry, cnty)
 		}
 	}
-	return City{Cities: entry}
+	return entry, nil
 }
 
-func (c *City) FilterByCity(cti string) City {
-	entry := make([]city.City, 0)
-
-	for _, cnty := range c.Cities {
-		if cnty.Name == cti {
+func (c City) GetByCity(city string) ([]cityModel.City, *customeError.XError) {
+	entry := make([]cityModel.City, 0)
+	if len(cities) == 0 {
+		return nil, cityError.NotLoaded(nil)
+	}
+	for _, cnty := range cities {
+		if cnty.Name == city {
 			entry = append(entry, cnty)
 		}
 	}
-	return City{Cities: entry}
+	return entry, nil
 }
-func (c *City) FilterByCityAndCountry(cti, ctry string) City {
-	entry := make([]city.City, 0)
 
-	for _, cnty := range c.Cities {
-		if cnty.Name == cti && cnty.CountryCode == ctry {
-			entry = append(entry, cnty)
+func (c City) GetByCityAndCountry(city, country string) (cityModel.City, *customeError.XError) {
+	var entry cityModel.City
+	if len(cities) == 0 {
+		return cityModel.City{}, countryError.NotLoaded(nil)
+	}
+	for _, cnty := range cities {
+		if cnty.Name == city && cnty.CountryCode == country {
+			return entry, nil
 		}
 	}
-	return City{Cities: entry}
+	return cityModel.City{}, cityError.NotFound(nil, city, country)
 }
