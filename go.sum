@@ -6,6 +6,10 @@ github.com/mhthrh/common-lib v0.0.0-20250205235354-cc5142a89e0d h1:84N2JoENQ/OH9
 github.com/mhthrh/common-lib v0.0.0-20250205235354-cc5142a89e0d/go.mod h1:sabu6xJn9nA781VYutfod5Fw1MZccHuBn96gJKNu/fs=
 github.com/mhthrh/common-lib v0.0.0-20250206004905-69f4e4c7ee29 h1:FRnDES3vYhiOgrqoz1uZRn96/7JUNlo6+43plM4/lg8=
 github.com/mhthrh/common-lib v0.0.0-20250206004905-69f4e4c7ee29/go.mod h1:sabu6xJn9nA781VYutfod5Fw1MZccHuBn96gJKNu/fs=
+github.com/mhthrh/common-lib v0.0.0-20250206182055-80dbb1bcae8b h1:sITk9RipfadP/QuxiX5XV08N4BwXDOlQq90iJoe8WtQ=
+github.com/mhthrh/common-lib v0.0.0-20250206182055-80dbb1bcae8b/go.mod h1:sabu6xJn9nA781VYutfod5Fw1MZccHuBn96gJKNu/fs=
+github.com/mhthrh/common-lib v0.0.0-20250206203859-7a9d8cf5fe1c h1:+sqGdB82Fn8xzecJb5Y6SNhjOorryL+w5I9kM98K5RY=
+github.com/mhthrh/common-lib v0.0.0-20250206203859-7a9d8cf5fe1c/go.mod h1:sabu6xJn9nA781VYutfod5Fw1MZccHuBn96gJKNu/fs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=

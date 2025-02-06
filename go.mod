@@ -4,7 +4,7 @@ go 1.23.5
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/mhthrh/common-lib v0.0.0-20250206004905-69f4e4c7ee29
+	github.com/mhthrh/common-lib v0.0.0-20250206203859-7a9d8cf5fe1c
 	go.uber.org/zap v1.27.0
 )
 
