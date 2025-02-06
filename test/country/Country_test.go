@@ -1,4 +1,4 @@
-package country
+package country_test
 
 import (
 	"customer-service/pkg/address/country"
@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	c *country.Countries
+	c *country.Countries1
 	e *customeError.XError
 )
 

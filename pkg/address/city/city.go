@@ -77,7 +77,6 @@ func (c City) GetByCountry(country string) ([]cityModel.City, *customeError.XErr
 	}
 	return entry, nil
 }
-
 func (c City) GetByCity(city string) ([]cityModel.City, *customeError.XError) {
 	entry := make([]cityModel.City, 0)
 	if len(cities) == 0 {
@@ -91,15 +90,14 @@ func (c City) GetByCity(city string) ([]cityModel.City, *customeError.XError) {
 	return entry, nil
 }
 
-func (c City) GetByCityAndCountry(city, country string) (cityModel.City, *customeError.XError) {
-	var entry cityModel.City
+func (c City) GetByCityAndCountry(city, country string) (*cityModel.City, *customeError.XError) {
 	if len(cities) == 0 {
-		return cityModel.City{}, countryError.NotLoaded(nil)
+		return nil, countryError.NotLoaded(nil)
 	}
 	for _, cnty := range cities {
 		if cnty.Name == city && cnty.CountryCode == country {
-			return entry, nil
+			return &cnty, nil
 		}
 	}
-	return cityModel.City{}, cityError.NotFound(nil, city, country)
+	return nil, nil
 }

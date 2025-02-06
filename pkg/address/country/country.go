@@ -6,7 +6,7 @@ import (
 	"errors"
 	customeError "github.com/mhthrh/common-lib/errors"
 	countryError "github.com/mhthrh/common-lib/errors/country"
-	"github.com/mhthrh/common-lib/model/address/country"
+	cModel "github.com/mhthrh/common-lib/model/address/country"
 	csvFile "github.com/mhthrh/common-lib/pkg/util/file/csv"
 )
 
@@ -15,49 +15,73 @@ const (
 	name = "countries.csv"
 )
 
-type Countries struct {
-	Countries []country.Country
+var (
+	countries []cModel.Country
+)
+
+type Country struct {
+	path string
+	name string
 }
 
-func LoadCountries() (*Countries, *customeError.XError) {
-	f := csvFile.New(path, name)
+func New() cModel.ICountry {
+	return &Country{
+		path: path,
+		name: name,
+	}
+}
+
+func (c Country) Load() *customeError.XError {
+	f := csvFile.New(c.path, c.name)
 
 	bts, e := f.Read()
 	if e != nil {
-		return nil, countryError.FileUnreachable(customeError.RunTimeError(e))
+		return countryError.FileUnreachable(customeError.RunTimeError(e))
 	}
 	reader := csv.NewReader(bytes.NewReader(bts))
 
 	rows, err := reader.ReadAll()
 	if err != nil {
-		return nil, countryError.FileUnreachable(customeError.RunTimeError(e))
+		return countryError.FileUnreachable(customeError.RunTimeError(e))
 	}
 	if len(rows) < 1 {
-		return nil, countryError.FileEmpty(customeError.RunTimeError(errors.New("no data")))
+		return countryError.FileEmpty(customeError.RunTimeError(errors.New("no data")))
 	}
-	c := make([]country.Country, len(rows))
+	countries = make([]cModel.Country, len(rows))
 	for i, row := range rows {
-		c[i] = country.Country{
+		countries[i] = cModel.Country{
 			ID:   row[0],
 			Name: row[1],
 			Code: row[2],
 		}
 	}
 
-	return &Countries{
-		Countries: c,
-	}, nil
+	return nil
 }
 
-func (c *Countries) FilterByCode(codes ...string) (Countries, *customeError.XError) {
-	entry := make([]country.Country, 0)
-	for _, code := range codes {
-		for _, cnty := range c.Countries {
-			if cnty.Code == code {
-				entry = append(entry, cnty)
-			}
+func (c Country) Countries() ([]cModel.Country, *customeError.XError) {
+	if len(countries) == 0 {
+		return nil, countryError.NotLoaded(nil)
+	}
+	return countries, nil
+}
+
+func (c Country) GetByName(name string) (*cModel.Country, *customeError.XError) {
+	for _, cnty := range countries {
+		if cnty.Name == name {
+			return &cnty, nil
 		}
 	}
 
-	return Countries{Countries: entry}, nil
+	return nil, countryError.NotFound(nil, name)
+}
+
+func (c Country) GetByCode(code string) (*cModel.Country, *customeError.XError) {
+	for _, cnty := range countries {
+		if cnty.Code == code {
+			return &cnty, nil
+		}
+	}
+
+	return nil, countryError.NotFound(nil, code)
 }
