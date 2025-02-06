@@ -6,6 +6,8 @@ github.com/mhthrh/GoNest v0.0.0-20250206221556-e0bd22d05c72 h1:M8T4WBFTXxf+TQV4W
 github.com/mhthrh/GoNest v0.0.0-20250206221556-e0bd22d05c72/go.mod h1:cI1rZYEQNS8d/btjrxeTS5o1l9tp/UJHzaSqHKUkcx8=
 github.com/mhthrh/GoNest v0.0.0-20250206221824-064fb8497063 h1:VcDiXdPP4gmp32iAgNMCJw+VWxVRDXQjEUaS0i0Zfzw=
 github.com/mhthrh/GoNest v0.0.0-20250206221824-064fb8497063/go.mod h1:cI1rZYEQNS8d/btjrxeTS5o1l9tp/UJHzaSqHKUkcx8=
+github.com/mhthrh/GoNest v0.0.0-20250206224543-00ce694ffe95 h1:zm+Z5aq4nJBBU71bBaCrg4x5msb9r6it0x9umcjn9AA=
+github.com/mhthrh/GoNest v0.0.0-20250206224543-00ce694ffe95/go.mod h1:cI1rZYEQNS8d/btjrxeTS5o1l9tp/UJHzaSqHKUkcx8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=
