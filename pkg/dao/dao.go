@@ -1,9 +1,9 @@
 package dao
 
 import (
-	"github.com/mhthrh/common-lib/model/address"
-	"github.com/mhthrh/common-lib/model/customer"
-	cError "github.com/mhthrh/common-lib/model/error"
+	"github.com/mhthrh/GoNest/model/address"
+	"github.com/mhthrh/GoNest/model/customer"
+	cError "github.com/mhthrh/GoNest/model/error"
 )
 
 type Dao struct {

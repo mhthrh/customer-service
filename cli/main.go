@@ -1,9 +1,9 @@
 package main
 
 import (
-	cError "github.com/mhthrh/common-lib/model/error"
-	l "github.com/mhthrh/common-lib/model/logger"
-	loader "github.com/mhthrh/common-lib/pkg/loader/file"
+	cError "github.com/mhthrh/GoNest/model/error"
+	l "github.com/mhthrh/GoNest/model/logger"
+	loader "github.com/mhthrh/GoNest/pkg/loader/file"
 	"go.uber.org/zap"
 	"os"
 	"os/signal"
