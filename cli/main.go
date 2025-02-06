@@ -1,12 +1,13 @@
 package main
 
 import (
-	loader "github.com/mhthrh/common-lib/pkg/loader/file"
-	l "github.com/mhthrh/common-lib/model/logger"
 	cError "github.com/mhthrh/common-lib/model/error"
+	l "github.com/mhthrh/common-lib/model/logger"
+	loader "github.com/mhthrh/common-lib/pkg/loader/file"
 	"go.uber.org/zap"
 	"os"
 	"os/signal"
+	"syscall"
 )
 
 const (
@@ -22,7 +23,7 @@ var (
 func init() {
 	osInterrupt = make(chan os.Signal)
 	listenerInterrupt = make(chan *cError.XError)
-	signal.Notify(osInterrupt, os.Interrupt)
+	signal.Notify(osInterrupt, os.Interrupt, syscall.SIGTERM, syscall.SIGKILL, syscall.SIGQUIT, syscall.SIGINT, syscall.SIGHUP)
 }
 func main() {
 	logger := zap.New(l.LogConfig())
