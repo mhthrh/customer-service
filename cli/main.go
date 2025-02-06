@@ -1,9 +1,9 @@
 package main
 
 import (
-	loader "github.com/mhthrh/common-lib/config/loader/file"
-	l "github.com/mhthrh/common-lib/config/logger"
-	customeError "github.com/mhthrh/common-lib/errors"
+	loader "github.com/mhthrh/common-lib/pkg/loader/file"
+	l "github.com/mhthrh/common-lib/model/logger"
+	cError "github.com/mhthrh/common-lib/model/error"
 	"go.uber.org/zap"
 	"os"
 	"os/signal"
@@ -16,12 +16,12 @@ const (
 
 var (
 	osInterrupt       chan os.Signal
-	listenerInterrupt chan *customeError.XError
+	listenerInterrupt chan *cError.XError
 )
 
 func init() {
 	osInterrupt = make(chan os.Signal)
-	listenerInterrupt = make(chan *customeError.XError)
+	listenerInterrupt = make(chan *cError.XError)
 	signal.Notify(osInterrupt, os.Interrupt)
 }
 func main() {
