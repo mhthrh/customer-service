@@ -13,10 +13,10 @@
     "name": "postgresSQL",
     "host": "localhost",
     "port": 5432,
-    "user": "postgres",
-    "password": "123456",
-    "dbname": "blue_bank",
-    "driver": "kireKhar",
+    "user": "test",
+    "password": "S3Tring@123",
+    "dbname": "db_test",
+    "driver": "postgres",
     "minCount": 1,
     "maxCount": 20
   }

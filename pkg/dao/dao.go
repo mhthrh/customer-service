@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"context"
 	"github.com/mhthrh/GoNest/model/address"
 	"github.com/mhthrh/GoNest/model/customer"
 	cError "github.com/mhthrh/GoNest/model/error"
@@ -9,40 +10,37 @@ import (
 type Dao struct {
 }
 
-func NewDao() customer.ICustomer {
-	return &Dao{}
-}
-func (d Dao) RegisterCustomer(address address.Address, customer customer.Customer) *cError.XError {
+func (d Dao) RegisterCustomer(ctx context.Context, address address.Address, customer customer.Customer) *cError.XError {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) GetCustomerById(id string) (*customer.Customer, bool) {
+func (d Dao) GetCustomerById(ctx context.Context, id string) (*customer.Customer, bool) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) GetCustomerByName(name string) (*customer.Customer, bool) {
+func (d Dao) GetCustomerByName(ctx context.Context, name string) (*customer.Customer, bool) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) GetCustomerByEmail(email string) (*customer.Customer, bool) {
+func (d Dao) GetCustomerByEmail(ctx context.Context, email string) (*customer.Customer, bool) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) GetCustomerByPhone(phone string) (*customer.Customer, bool) {
+func (d Dao) GetCustomerByPhone(ctx context.Context, phone string) (*customer.Customer, bool) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) ChangeStatus(id string, status customer.Status) *cError.XError {
+func (d Dao) ChangeStatus(ctx context.Context, id string, status customer.Status) *cError.XError {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (d Dao) EditCustomer(address address.Address, customer customer.Customer) *cError.XError {
+func (d Dao) EditCustomer(ctx context.Context, address address.Address, customer customer.Customer) *cError.XError {
 	//TODO implement me
 	panic("implement me")
 }

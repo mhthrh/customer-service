@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
+	control "customer-service/control"
+	"fmt"
 	cError "github.com/mhthrh/GoNest/model/error"
-	l "github.com/mhthrh/GoNest/model/logger"
 	loader "github.com/mhthrh/GoNest/pkg/loader/file"
+	l "github.com/mhthrh/GoNest/pkg/logger"
 	"go.uber.org/zap"
 	"os"
 	"os/signal"
@@ -11,7 +14,7 @@ import (
 )
 
 const (
-	configPath = "/customer-service/file/config"
+	configPath = "/customer-service/config"
 	configName = "config.json"
 )
 
@@ -40,7 +43,8 @@ func main() {
 	}
 	sugar.Info("customer service config loaded successfully")
 	sugar.Info(config)
-
+	go control.FillDbPool(context.Background(), *config)
+	fmt.Println()
 	select {
 	case <-osInterrupt:
 		sugar.Info("OS interrupt signal received")
