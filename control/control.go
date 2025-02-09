@@ -28,11 +28,11 @@ func init() {
 	resManage = make(chan *mPool.Connection)
 
 }
-func FillDbPool(ctx context.Context, config l.Config) *cMerror.XError {
+func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 	var r mPool.Response
 	pool, err := cPool.New(config.DataBase)
 	if err != nil {
-		return err
+		e <- err
 	}
 	go pool.Maker(req, res)
 	req <- mPool.Request{
@@ -43,15 +43,15 @@ func FillDbPool(ctx context.Context, config l.Config) *cMerror.XError {
 	select {
 	case r = <-res:
 		if r.Error != nil {
-			return r.Error
+			e <- r.Error
 		}
 		if r.Total != 50 { // should be change
-			return cMerror.RunTimeError(nil) //should be change
+			e <- cMerror.RunTimeError(nil)
 		}
 	case <-time.After(time.Second * 10):
-		return cMerror.RunTimeError(nil) //should be change
+		e <- cMerror.RunTimeError(nil) //should be change
 	case <-ctx.Done():
-		return cMerror.RunTimeError(nil) //should be change
+		e <- cMerror.RunTimeError(nil) //should be change
 	}
 
 	go pool.Refresh(reqRefresh, resRefresh)
@@ -60,7 +60,7 @@ func FillDbPool(ctx context.Context, config l.Config) *cMerror.XError {
 	for {
 		select {
 		case <-ctx.Done():
-			return cMerror.RunTimeError(nil) //should be change
+			e <- cMerror.RunTimeError(nil) //should be change
 		case <-time.After(time.Second * 10): //should be change
 			reqRefresh <- struct{}{}
 		case f := <-resRefresh:

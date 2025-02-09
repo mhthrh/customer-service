@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	control "customer-service/control"
+	"customer-service/control"
 	"fmt"
 	cError "github.com/mhthrh/GoNest/model/error"
 	loader "github.com/mhthrh/GoNest/pkg/loader/file"
@@ -43,7 +43,7 @@ func main() {
 	}
 	sugar.Info("customer service config loaded successfully")
 	sugar.Info(config)
-	go control.FillDbPool(context.Background(), *config)
+	go control.Run(context.Background(), *config, listenerInterrupt)
 	fmt.Println()
 	select {
 	case <-osInterrupt:
