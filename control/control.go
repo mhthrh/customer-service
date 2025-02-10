@@ -36,7 +36,7 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 	}
 	go pool.Maker(req, res)
 	req <- mPool.Request{
-		Count: 50, //should be changed, add a property in db config and set it as count
+		Count: uint(config.DataBase.PoolSize),
 		Type:  mPool.Types(1),
 		Stop:  false,
 	}
@@ -45,23 +45,22 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 		if r.Error != nil {
 			e <- r.Error
 		}
-		if r.Total != 50 { // should be change
-			e <- cMerror.RunTimeError(nil)
+		if r.Total != uint(config.DataBase.PoolSize) {
+			e <- mPool.SizeUnexpected(nil)
 		}
 	case <-time.After(time.Second * 10):
-		e <- cMerror.RunTimeError(nil) //should be change
+		e <- mPool.TimeOut(nil)
 	case <-ctx.Done():
-		e <- cMerror.RunTimeError(nil) //should be change
+		e <- mPool.TimeOut(nil)
 	}
 
 	go pool.Refresh(reqRefresh, resRefresh)
-
 	go pool.Manager(reqManage, resManage)
 	for {
 		select {
 		case <-ctx.Done():
-			e <- cMerror.RunTimeError(nil) //should be change
-		case <-time.After(time.Second * 10): //should be change
+			e <- mPool.TerminateByMain(nil)
+		case <-time.After(time.Second * time.Duration(config.DataBase.RefreshTime)):
 			reqRefresh <- struct{}{}
 		case f := <-resRefresh:
 			fmt.Println(f) // should be change
