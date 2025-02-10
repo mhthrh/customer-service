@@ -10,27 +10,30 @@ import (
 type Validation struct {
 }
 
+func New() customer.ICustomer {
+	return Validation{}
+}
 func (v Validation) RegisterCustomer(ctx context.Context, address address.Address, customer customer.Customer) *cError.XError {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (v Validation) GetCustomerById(ctx context.Context, id string) (*customer.Customer, bool) {
+func (v Validation) GetCustomerById(ctx context.Context, id string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (v Validation) GetCustomerByName(ctx context.Context, name string) (*customer.Customer, bool) {
+func (v Validation) GetCustomerByName(ctx context.Context, name string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (v Validation) GetCustomerByEmail(ctx context.Context, email string) (*customer.Customer, bool) {
+func (v Validation) GetCustomerByEmail(ctx context.Context, email string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (v Validation) GetCustomerByPhone(ctx context.Context, phone string) (*customer.Customer, bool) {
+func (v Validation) GetCustomerByPhone(ctx context.Context, phone string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
