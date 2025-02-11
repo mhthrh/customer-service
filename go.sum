@@ -12,6 +12,10 @@ github.com/mhthrh/GoNest v0.0.0-20250210185356-4de6e922020f h1:VaFOW3XpjpaIjDceM
 github.com/mhthrh/GoNest v0.0.0-20250210185356-4de6e922020f/go.mod h1:ejJY0j845wHX4izg9HnhYPHg5I9koepbtPbEYc0WuAE=
 github.com/mhthrh/GoNest v0.0.0-20250210190025-a4fbe7bcc72f h1:zdM+5Q2tS7FL+elvo7X3YYmhuyKW1WKXtn6Z1jC83pU=
 github.com/mhthrh/GoNest v0.0.0-20250210190025-a4fbe7bcc72f/go.mod h1:ejJY0j845wHX4izg9HnhYPHg5I9koepbtPbEYc0WuAE=
+github.com/mhthrh/GoNest v0.0.0-20250211002415-742ac491e95b h1:cIMgLMzaWCbzucO9uhRaW25P5Ud2oZcsg3MULHzD65E=
+github.com/mhthrh/GoNest v0.0.0-20250211002415-742ac491e95b/go.mod h1:ejJY0j845wHX4izg9HnhYPHg5I9koepbtPbEYc0WuAE=
+github.com/mhthrh/GoNest v0.0.0-20250211002620-dfc47ec58f4f h1:+BRq+WYDhsadoNtHrQK1VboXsCCbe8BpCdVAXkQ16qw=
+github.com/mhthrh/GoNest v0.0.0-20250211002620-dfc47ec58f4f/go.mod h1:ejJY0j845wHX4izg9HnhYPHg5I9koepbtPbEYc0WuAE=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/samber/lo v1.49.1 h1:4BIFyVfuQSEpluc7Fua+j1NolZHiEHEpaSEKdsH0tew=

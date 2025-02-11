@@ -19,5 +19,9 @@
     "driver": "postgres",
     "minCount": 1,
     "maxCount": 20
+  },
+  "grpc": {
+    "ip": "127.0.0.1",
+    "port": 6985
   }
 }

@@ -3,7 +3,7 @@ module customer-service
 go 1.23.5
 
 require (
-	github.com/mhthrh/GoNest v0.0.0-20250210190025-a4fbe7bcc72f
+	github.com/mhthrh/GoNest v0.0.0-20250211002620-dfc47ec58f4f
 	go.uber.org/zap v1.27.0
 )
 

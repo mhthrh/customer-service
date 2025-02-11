@@ -28,22 +28,22 @@ func (s Service) RegisterCustomer(ctx context.Context, address address.Address, 
 	panic("implement me")
 }
 
-func (s Service) GetCustomerById(ctx context.Context, id string) (*customer.Customer, bool) {
+func (s Service) GetCustomerById(ctx context.Context, id string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (s Service) GetCustomerByName(ctx context.Context, name string) (*customer.Customer, bool) {
+func (s Service) GetCustomerByName(ctx context.Context, name string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (s Service) GetCustomerByEmail(ctx context.Context, email string) (*customer.Customer, bool) {
+func (s Service) GetCustomerByEmail(ctx context.Context, email string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }
 
-func (s Service) GetCustomerByPhone(ctx context.Context, phone string) (*customer.Customer, bool) {
+func (s Service) GetCustomerByPhone(ctx context.Context, phone string) (*customer.Customer, *cError.XError) {
 	//TODO implement me
 	panic("implement me")
 }

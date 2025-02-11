@@ -8,6 +8,8 @@ import (
 	loader "github.com/mhthrh/GoNest/pkg/loader/file"
 	l "github.com/mhthrh/GoNest/pkg/logger"
 	"go.uber.org/zap"
+	"log"
+	"net"
 	"os"
 	"os/signal"
 	"syscall"
@@ -42,9 +44,15 @@ func main() {
 		sugar.Fatal(err)
 	}
 	sugar.Info("customer service config loaded successfully")
-	sugar.Info(config)
+
 	go control.Run(context.Background(), *config, listenerInterrupt)
 	fmt.Println()
+
+	l, e := net.Listen("tcp", config.Grpc.Ip)
+	if e != nil {
+		log.Printf("Error listening on %s. error %v", config.Grpc.Ip, e)
+	}
+
 	select {
 	case <-osInterrupt:
 		sugar.Info("OS interrupt signal received")
