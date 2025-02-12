@@ -1,0 +1,25 @@
+syntax="proto3";
+
+package customer;
+import "google/protobuf/empty.proto";
+import "github.com/mhthrh/model/model/city/grpc/city.proto";
+import "/Users/mohsen/Projects/Golang/x-bank/GoNest/model/customer/gCustomer.proto";
+import "/Users/mohsen/Projects/Golang/x-bank/GoNest/model/address/gAddress.proto";
+import "/Users/mohsen/Projects/Golang/x-bank/GoNest/model/error/gError.proto";
+
+
+service Services{
+  rpc RegisterCustomer(Request)returns(Response){}
+}
+
+message Request{
+  gAddress.Address Address=1;
+  gCustomer.customer Customer=2;
+
+}
+
+message Response{
+  gCustomer.customer Customer=1;
+  error.Error Error=2;
+
+}

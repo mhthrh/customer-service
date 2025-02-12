@@ -29,11 +29,18 @@ func init() {
 
 }
 func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
+
 	var r mPool.Response
 	pool, err := cPool.New(config.DataBase)
 	if err != nil {
 		e <- err
+		return
 	}
+
+	defer func() {
+		pool.ReleaseAll(true)
+	}()
+
 	go pool.Maker(req, res)
 	req <- mPool.Request{
 		Count: uint(config.DataBase.PoolSize),
@@ -47,11 +54,14 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 		}
 		if r.Total != uint(config.DataBase.PoolSize) {
 			e <- mPool.SizeUnexpected(nil)
+			return
 		}
 	case <-time.After(time.Second * 10):
 		e <- mPool.TimeOut(nil)
+		return
 	case <-ctx.Done():
 		e <- mPool.TimeOut(nil)
+		return
 	}
 
 	go pool.Refresh(reqRefresh, resRefresh)
@@ -60,6 +70,7 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 		select {
 		case <-ctx.Done():
 			e <- mPool.TerminateByMain(nil)
+			return
 		case <-time.After(time.Second * time.Duration(config.DataBase.RefreshTime)):
 			reqRefresh <- struct{}{}
 		case f := <-resRefresh:
