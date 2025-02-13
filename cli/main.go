@@ -14,7 +14,6 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 )
 
 const (
@@ -24,12 +23,12 @@ const (
 
 var (
 	osInterrupt       chan os.Signal
-	listenerInterrupt chan *cError.XError
+	internalInterrupt chan *cError.XError
 )
 
 func init() {
 	osInterrupt = make(chan os.Signal)
-	listenerInterrupt = make(chan *cError.XError)
+	internalInterrupt = make(chan *cError.XError)
 	signal.Notify(osInterrupt, os.Interrupt, syscall.SIGTERM, syscall.SIGKILL, syscall.SIGQUIT, syscall.SIGINT, syscall.SIGHUP)
 }
 func main() {
@@ -48,7 +47,7 @@ func main() {
 	}
 	sugar.Info("customer service config loaded successfully")
 
-	go control.Run(ctx, *config, listenerInterrupt)
+	go control.Run(ctx, *config, internalInterrupt)
 
 	lis, e := net.Listen("tcp", fmt.Sprintf("%s:%d", config.Grpc.Ip, config.Grpc.Port))
 	if e != nil {
@@ -62,14 +61,18 @@ func main() {
 			log.Fatalf("failed to serve: %v \n", e)
 		}
 	}()
+	sugar.Info("gRPC server started on port ", config.Grpc.Port)
+
+	sugar.Info("service listening for any interrupt signals...")
 	select {
 	case <-osInterrupt:
 		sugar.Info("OS interrupt signal received")
-	case e := <-listenerInterrupt:
-		sugar.Infof("customer service listener interrupt signal received, %+v", e)
+	case e := <-internalInterrupt:
+		sugar.Errorf("customer service listener interrupt signal received, %+v", e)
 	}
 
 	sugar.Info("stopping customer service...")
 	cancel()
-	<-time.After(2 * time.Second)
+
+	<-internalInterrupt
 }

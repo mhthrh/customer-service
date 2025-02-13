@@ -14,7 +14,7 @@ var (
 	req        chan mPool.Request
 	res        chan mPool.Response
 	reqRefresh chan struct{}
-	resRefresh chan *cMerror.XError
+	resRefresh chan mPool.RefreshResponse
 	reqManage  chan mPool.ManageRequest
 	resManage  chan *mPool.Connection
 )
@@ -23,7 +23,7 @@ func init() {
 	req = make(chan mPool.Request)
 	res = make(chan mPool.Response)
 	reqRefresh = make(chan struct{})
-	resRefresh = make(chan *cMerror.XError)
+	resRefresh = make(chan mPool.RefreshResponse)
 	reqManage = make(chan mPool.ManageRequest)
 	resManage = make(chan *mPool.Connection)
 
@@ -39,6 +39,7 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 
 	defer func() {
 		pool.ReleaseAll(true)
+		e <- cMerror.Success()
 	}()
 
 	go pool.Maker(req, res)
@@ -51,6 +52,7 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 	case r = <-res:
 		if r.Error != nil {
 			e <- r.Error
+			return
 		}
 		if r.Total != uint(config.DataBase.PoolSize) {
 			e <- mPool.SizeUnexpected(nil)
@@ -59,22 +61,33 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 	case <-time.After(time.Second * 10):
 		e <- mPool.TimeOut(nil)
 		return
-	case <-ctx.Done():
-		e <- mPool.TimeOut(nil)
-		return
 	}
 
 	go pool.Refresh(reqRefresh, resRefresh)
+
 	go pool.Manager(reqManage, resManage)
+
 	for {
 		select {
 		case <-ctx.Done():
 			e <- mPool.TerminateByMain(nil)
 			return
+		case r = <-res:
+			if r.Error != nil {
+				e <- r.Error
+				return
+			}
 		case <-time.After(time.Second * time.Duration(config.DataBase.RefreshTime)):
 			reqRefresh <- struct{}{}
 		case f := <-resRefresh:
-			fmt.Println(f) // should be change
+			if f.KilledCount > 0 {
+				req <- mPool.Request{
+					Count: f.KilledCount,
+					Type:  mPool.Types(1),
+					Stop:  false,
+				}
+				fmt.Println()
+			}
 		}
 	}
 }

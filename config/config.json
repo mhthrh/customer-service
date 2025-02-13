@@ -17,8 +17,8 @@
     "password": "S3Tring@123",
     "dbname": "db_test",
     "driver": "postgres",
-    "minCount": 1,
-    "maxCount": 20
+    "poolSize": 50,
+    "refreshTime": 10
   },
   "grpc": {
     "ip": "127.0.0.1",
