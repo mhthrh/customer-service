@@ -3,12 +3,15 @@ package main
 import (
 	"context"
 	"customer-service/control"
+	"customer-service/pkg/grpcApi"
 	"fmt"
+	"github.com/mhthrh/GoNest/model/customer/grpc/customer"
 	cError "github.com/mhthrh/GoNest/model/error"
 	loader "github.com/mhthrh/GoNest/pkg/loader/file"
 	l "github.com/mhthrh/GoNest/pkg/logger"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
 	"os"
@@ -45,7 +48,7 @@ func main() {
 	if err != nil {
 		sugar.Fatal(err)
 	}
-	sugar.Info("customer service config loaded successfully")
+	sugar.Info("customer.v1 service config loaded successfully")
 
 	go control.Run(ctx, *config, internalInterrupt)
 
@@ -56,7 +59,14 @@ func main() {
 	rpcServer := grpc.NewServer()
 	defer rpcServer.GracefulStop()
 
+	customer.RegisterCustomerServiceServer(
+		rpcServer, &grpcApi.Customer{
+			UnimplementedCustomerServiceServer: customer.UnimplementedCustomerServiceServer{},
+		},
+	)
+
 	go func() {
+		reflection.Register(rpcServer)
 		if e = rpcServer.Serve(lis); e != nil {
 			log.Fatalf("failed to serve: %v \n", e)
 		}
@@ -68,10 +78,10 @@ func main() {
 	case <-osInterrupt:
 		sugar.Info("OS interrupt signal received")
 	case e := <-internalInterrupt:
-		sugar.Errorf("customer service listener interrupt signal received, %+v", e)
+		sugar.Errorf("customer.v1 service listener interrupt signal received, %+v", e)
 	}
 
-	sugar.Info("stopping customer service...")
+	sugar.Info("stopping customer.v1 service...")
 	cancel()
 
 	<-internalInterrupt
