@@ -14,7 +14,7 @@ var (
 	req        chan mPool.Request
 	res        chan mPool.Response
 	reqRefresh chan struct{}
-	resRefresh chan *cMerror.XError
+	resRefresh chan mPool.RefreshResponse
 	reqManage  chan mPool.ManageRequest
 	resManage  chan *mPool.Connection
 )
@@ -23,20 +23,28 @@ func init() {
 	req = make(chan mPool.Request)
 	res = make(chan mPool.Response)
 	reqRefresh = make(chan struct{})
-	resRefresh = make(chan *cMerror.XError)
+	resRefresh = make(chan mPool.RefreshResponse)
 	reqManage = make(chan mPool.ManageRequest)
 	resManage = make(chan *mPool.Connection)
 
 }
 func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
+
 	var r mPool.Response
 	pool, err := cPool.New(config.DataBase)
 	if err != nil {
 		e <- err
+		return
 	}
+
+	defer func() {
+		pool.ReleaseAll(true)
+		e <- cMerror.Success()
+	}()
+
 	go pool.Maker(req, res)
 	req <- mPool.Request{
-		Count: 50, //should be changed, add a property in db config and set it as count
+		Count: uint(config.DataBase.PoolSize),
 		Type:  mPool.Types(1),
 		Stop:  false,
 	}
@@ -44,27 +52,42 @@ func Run(ctx context.Context, config l.Config, e chan<- *cMerror.XError) {
 	case r = <-res:
 		if r.Error != nil {
 			e <- r.Error
+			return
 		}
-		if r.Total != 50 { // should be change
-			e <- cMerror.RunTimeError(nil)
+		if r.Total != uint(config.DataBase.PoolSize) {
+			e <- mPool.SizeUnexpected(nil)
+			return
 		}
 	case <-time.After(time.Second * 10):
-		e <- cMerror.RunTimeError(nil) //should be change
-	case <-ctx.Done():
-		e <- cMerror.RunTimeError(nil) //should be change
+		e <- mPool.TimeOut(nil)
+		return
 	}
 
 	go pool.Refresh(reqRefresh, resRefresh)
 
 	go pool.Manager(reqManage, resManage)
+
 	for {
 		select {
 		case <-ctx.Done():
-			e <- cMerror.RunTimeError(nil) //should be change
-		case <-time.After(time.Second * 10): //should be change
+			e <- mPool.TerminateByMain(nil)
+			return
+		case r = <-res:
+			if r.Error != nil {
+				e <- r.Error
+				return
+			}
+		case <-time.After(time.Second * time.Duration(config.DataBase.RefreshTime)):
 			reqRefresh <- struct{}{}
 		case f := <-resRefresh:
-			fmt.Println(f) // should be change
+			if f.KilledCount > 0 {
+				req <- mPool.Request{
+					Count: f.KilledCount,
+					Type:  mPool.Types(1),
+					Stop:  false,
+				}
+				fmt.Println()
+			}
 		}
 	}
 }
