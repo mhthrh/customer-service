@@ -10,6 +10,7 @@ RUN apt update && apt install vim -y && apt install make -y && apt-get update &&
 ENV APP_ENV=test
 ENV PORT=6985
 ENV IP="0.0.0.0"
+ENV A3PATH="/go/app/x-bank"
 
 EXPOSE 6985
 WORKDIR app/x-bank/customer-service
@@ -26,4 +27,6 @@ RUN ["/bin/bash", "-c", "pwd"]
 RUN ["/bin/bash", "-c", "ls -al"]
 #
 RUN ["make", "set-app-path-docker"]
+RUN /bin/bash -c "source ~/.bashrc"
+
 CMD ["./customer-service"]

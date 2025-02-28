@@ -11,7 +11,7 @@
   },
   "db": {
     "name": "postgresSQL",
-    "host": "localhost",
+    "host": "db-server",
     "port": 5432,
     "user": "test",
     "password": "S3Tring@123",
@@ -21,7 +21,7 @@
     "refreshTime": 10
   },
   "grpc": {
-    "ip": "127.0.0.1",
+    "ip": "0.0.0.0",
     "port": 6985
   },
   "http": {
